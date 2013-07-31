@@ -1,7 +1,7 @@
 #
 # https://github.com/brhelwig/puppet-phantomjs/commit/2254f9fbc897ee28b817cb4ca2b011438e48a7b3
 #
-class phantomjs($version = "1.9.0" ) {
+class phantomjs($version = "1.9.1" ) {
 
     if $::architecture == "amd64" or $::architecture == "x86_64" {
         $platid = "x86_64"

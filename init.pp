@@ -16,8 +16,4 @@ package { "selenium":
   require => Package['python-pip'],
 }
 
-# to fix: phantomjs: error while loading shared libraries: libfontconfig.so.1
-package { "fontconfig":
-  ensure => latest,
-}
 include phantomjs

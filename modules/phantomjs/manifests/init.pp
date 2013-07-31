@@ -1,5 +1,5 @@
 #
-# https://github.com/brhelwig/puppet-phantomjs/commit/2254f9fbc897ee28b817cb4ca2b011438e48a7b3
+# https://github.com/drewkhoury/puppet-phantomjs/commit/de512ac24a986de063c723dee05fb48960cb2af9
 #
 class phantomjs($version = "1.9.1" ) {
 
@@ -15,12 +15,19 @@ class phantomjs($version = "1.9.1" ) {
 
     file { $phantom_src_path : ensure => directory }
 
+    # Make sure fontconfig is installed to fix the following:
+    # phantomjs: error while loading shared libraries: libfontconfig.so.1
+    package { "fontconfig":
+        ensure => latest,
+    }
+
     exec { "download-${filename}" : 
         path => '/usr/bin:/usr/sbin:/bin',
         command => "wget http://phantomjs.googlecode.com/files/${filename} -O ${filename}",
         cwd => $phantom_src_path,
         creates => "${phantom_src_path}${filename}",
-        require => File[$phantom_src_path]
+        require => File[$phantom_src_path],
+        before => Package["fontconfig"]
     }
     
     exec { "extract-${filename}" :
